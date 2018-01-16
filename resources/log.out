@@ -1,0 +1,6 @@
+2017-01-09 14:25:14,419 DEBUG [main] (com.test.HelloLog4j:22) - This is debug message.
+2017-01-09 14:25:14,421  INFO [main] (com.test.HelloLog4j:24) - This is info message.
+2017-01-09 14:25:14,421 ERROR [main] (com.test.HelloLog4j:26) - This is error message.
+2017-01-09 14:26:24,320 DEBUG [main] (com.test.HelloLog4j:22) - This is debug message.
+2017-01-09 14:26:24,323  INFO [main] (com.test.HelloLog4j:24) - This is info message.
+2017-01-09 14:26:24,323 ERROR [main] (com.test.HelloLog4j:26) - This is error message.

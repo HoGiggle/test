@@ -1,0 +1,34 @@
+message InputUser {
+
+    //IP信息
+    message IP {
+        required string latestIp = 1;
+        repeated string allIp = 2;
+    }
+
+    //联系人信息
+    message Contact {
+        repeated Caller callers = 1;
+        repeated Except excepts = 2;
+
+         message Except {
+             required string except = 1;
+         }
+
+         message Caller {
+             required int64 caller = 1;        //最新号码
+             repeated int64 allCaller = 2;     //所有号码, 包括历史号码
+         }
+    }
+
+    //安装、使用信息
+    message AppList {
+        repeated App apps = 1;
+        message App {
+            required string pkg = 1;
+            optional string name = 2;
+            optional int32 activeDays = 3;
+            optional int32 collectDays = 4;
+        }
+    }
+ }

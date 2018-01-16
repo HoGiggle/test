@@ -1,0 +1,7 @@
+message UseInfo
+
+optional int32 fdf = 1;         //渠道号, 8位数字, 存为Int, 取用时不足8位前面补0
+    optional string imsi = 2;
+    optional string imei = 3;
+    optional string phoneType = 4; //手机型号
+    optional string version = 5;   //输入法版本
