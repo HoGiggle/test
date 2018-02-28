@@ -11,13 +11,13 @@ import org.apache.spark.mllib.feature.{Word2Vec, Word2VecModel}
 object Word2VecTest {
   def main(args: Array[String]): Unit = {
     val sc = CommonService.scClusterInit(this.getClass.getName)
-    if (args(0) == "1") segment(sc, args)
-    if (args(1) == "1") word2VecRun(sc, args)
+    if (args(0) == "1") segment(sc)
+    if (args(1) == "1") word2VecRun(sc)
 
     //find similar words
     if (args(0) == "2") {
       val model = Word2VecModel.load(sc, "/user/iflyrd/work/jjhu/ml/word2vec/model")
-      val like = model.findSynonyms(args(0), 20)
+      val like = model.findSynonyms(args(1), 40)
       for ((item, cos) <- like) {
         println(s"$item  $cos")
       }
@@ -25,7 +25,7 @@ object Word2VecTest {
     sc.stop()
   }
 
-  def localSegmentTest(args: Array[String]) = {
+  def localSegmentTest() = {
     val sc = CommonService.scLocalInit(this.getClass.getName)
     val stopWordPath = "file:///E:\\data\\mllib\\stopWords"
     val bcStopWords = sc.broadcast(sc.textFile(stopWordPath).collect().toSet)
@@ -49,7 +49,7 @@ object Word2VecTest {
     sc.stop()
   }
 
-  def word2VecRun(sc:SparkContext, args: Array[String]) = {
+  def word2VecRun(sc:SparkContext) = {
     val input = sc.textFile("/user/iflyrd/work/jjhu/ml/word2vec/segment").map(line => line.split(" ").toSeq)
     //model train
     val word2vec = new Word2Vec()
@@ -69,14 +69,18 @@ object Word2VecTest {
     //val sameModel = Word2VecModel.load(sc, "/user/iflyrd/work/jjhu/ml/word2vec/model")
   }
 
-  def segment(sc:SparkContext, args: Array[String]): Unit = {
+  def segment(sc:SparkContext): Unit = {
     //stop words
     val stopWordPath = "/user/iflyrd/work/jjhu/ml/stopwords/*"
     val bcStopWords = sc.broadcast(sc.textFile(stopWordPath).collect().toSet)
 
     //content segment
-    val inPath = "/user/iflyrd/work/jjhu/ml/word2vec/data/*"
+//    val inPath = "/user/iflyrd/work/jjhu/ml/word2vec/data/*"
+    val inPath = "/user/iflyms/inter/QueryInfo/20180226/*"
     val segmentRes = sc.textFile(inPath)
+      .map(_.split("~", -1))
+      .filter(_.length == 5)
+      .map(x => x(2))
       .map(AsciiUtil.sbc2dbcCase)
       .mapPartitions(it =>{
         it.map(ct => {
@@ -87,12 +91,13 @@ object Word2VecTest {
               .filter(!bcStopWords.value.contains(_))
               .mkString(" ")
           } catch {
-            case e: Exception => println(ct);""
+            case e: NullPointerException => println(ct);""
           }
         })
       })
 
     //save
     segmentRes.saveAsTextFile("/user/iflyrd/work/jjhu/ml/word2vec/segment")
+    bcStopWords.unpersist()
   }
 }

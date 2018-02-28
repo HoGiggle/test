@@ -1,5 +1,7 @@
 import junit.framework.TestCase;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
