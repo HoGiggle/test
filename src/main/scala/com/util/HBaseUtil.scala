@@ -24,8 +24,8 @@ import scala.collection.mutable
   * Created by jjhu on 2017/2/7.
   */
 object HBaseUtil {
-    val quorumIp = "172.16.69.14,172.16.69.15,172.16.69.16"
-    val rootDir = "172.16.67.21:16000"
+    val quorumIp = ""
+    val rootDir = ""
     var hbaseConf = HBaseConfiguration.create()
 
     hbaseConf.set("hbase.zookeeper.quorum", quorumIp)
