@@ -1,20 +1,15 @@
 package com.test
 
-import org.apache.log4j.{Level, Logger}
-import org.apache.spark.{SparkConf, SparkContext}
+import com.util.CommonService
+import junit.framework.TestCase
 
 /**
   * Created by jjhu on 2017/2/14.
   */
-object ProtoTest {
-    def main(args: Array[String]): Unit = {
-        val Array(dayRange, partitions) = args
-        Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
-        val conf = new SparkConf().setAppName(this.getClass.getName)
-        conf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer") // 注册要序列化的自定义类型。
-        //        conf.registerKryoClasses(Array(classOf[InputUser]))
-        val sc = new SparkContext(conf)
-
-
-    }
+object ProtoTest extends TestCase{
+  def testSourceCode(): Unit ={
+    val sc = CommonService.scLocalInit(this.getClass.getName)
+    val rdd1 = sc.textFile("").map((_, 1))
+    rdd1.groupByKey()
+  }
 }

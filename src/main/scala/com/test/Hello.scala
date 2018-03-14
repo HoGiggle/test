@@ -49,19 +49,6 @@ object Hello {
     private val hexString: String = "0123456789ABCDEF"
 
     def main(args: Array[String]): Unit = {
-//        val job = new Job()
-//        job.setOutputFormatClass(classOf[TextOutputFormat[LongWritable,Text]])
-//        job.getConfiguration().set("mapred.output.compress", "true")
-//        job.getConfiguration().set("mapred.output.compression.codec", "com.hadoop.compression.lzo.LzopCodec")
-//        val textFile = sc.newAPIHadoopFile(args(0), classOf[LzoTextInputFormat],classOf[LongWritable], classOf[Text],job.getConfiguration())
-//        textFile.saveAsNewAPIHadoopFile(args(1), classOf[LongWritable], classOf[Text],classOf[TextOutputFormat[LongWritable,Text]],job.getConfiguration())
-
-      val sdf = new SimpleDateFormat("yyyyMMdd")
-      val date = sdf.parse("20170321")
-      val cal = Calendar.getInstance()
-      cal.setTime(date)
-      cal.add(Calendar.WEEK_OF_MONTH, 1)
-      println(sdf.format(cal.getTime))
     }
 
   def dateCreate(start: String, end: String): Array[String] = {

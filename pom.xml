@@ -74,7 +74,7 @@
         <dependency>
             <groupId>com.hankcs</groupId>
             <artifactId>hanlp</artifactId>
-            <version>portable-1.2.8</version>
+            <version>portable-1.5.4</version>
         </dependency>
 
         <dependency>

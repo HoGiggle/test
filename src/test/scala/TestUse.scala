@@ -19,6 +19,19 @@ object Color extends Enumeration{
 
 class TestUse extends TestCase {
 
+  def testIoRead() = {
+    import scala.io.Source
+    val source = Source.fromFile("E:\\data\\wordsMapping.txt", "UTF-8")
+    //    val lineIterator = source.getLines
+    //    for(line <- lineIterator){
+    //      println(line)
+    //    }
+
+    val lines = source.getLines.toArray
+    lines.take(10).foreach(println)
+    source.close() //记得调用close
+  }
+
   def testEnum() = {
     val color = Color.Red
     println(color.id)
